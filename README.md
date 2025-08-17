@@ -5,7 +5,12 @@ Smart volunteer shift automation for HOPE conference staff and volunteers.
 Tested with Scriptable - https://apps.apple.com/us/app/scriptable/id1405459188
 but can run on anything that can run javascript. 
 
+
+
+
 ### You only need checkin.js and paste it into scriptable. Add creds. Have fun at HOPE! 
+
+### Demo: https://matrix.to/#/!hgCfivXvLYeBkkAUDW:hope.net/$uzoQcOlR0x4hlgGbRMDKmooefA3ySaqj-feSuVguym4?via=hope.net&via=matrix.org
 
 ## ✨ Features
 
