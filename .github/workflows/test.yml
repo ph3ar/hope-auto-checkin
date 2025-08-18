@@ -13,42 +13,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: Install eslint + prettier if missing
-      run: |
-        npm init -y --scope dummy
-        npm install --save-dev eslint prettier
+      - name: Create dummy .env
+        run: |
+          echo "ENGELSYSTEM_USER=demo" >> .env
+          echo "ENGELSYSTEM_PASS=demo" >> .env
+          echo "ENGELSYSTEM_APIKEY=demo" >> .env
+          echo "MATRIX_USER=demo" >> .env
+          echo "MATRIX_PASS=demo" >> .env
 
-    - name: Create dummy .env
-      run: |
-        echo "ENGELSYSTEM_USER=demo" >> .env
-        echo "ENGELSYSTEM_PASS=demo" >> .env
-        echo "ENGELSYSTEM_APIKEY=demo" >> .env
-        echo "MATRIX_USER=demo" >> .env
-        echo "MATRIX_PASS=demo" >> .env
+      - name: Install prettier and eslint
+        run: |
+          npm init -y
+          npm install --save-dev prettier eslint@8
 
-    - name: Lint Syntax
-      run: node -c checkin.js
+      - name: Run Prettier auto-fix
+        run: npx prettier --write checkin.js
 
-    - name: Run ESLint
-      run: |
-        npx eslint@8 checkin.js --no-eslintrc --env node --parser-options=ecmaVersion:2020 --rule 'quotes: [2, "single"]'
-    - name: Run Prettier Auto-Fix
-      run: npx prettier --write checkin.js
+      - name: Run ESLint (single-quote rule)
+        run: |
+          npx eslint@8 checkin.js --no-eslintrc --env node --parser-options=ecmaVersion:2020 --rule 'quotes: [2, "single"]'
 
-    - name: Commit Formatting (if changed)
-      uses: EndBug/add-and-commit@v9
-      with:
-        default_author: github_actions
-        message: "chore: auto-format via prettier"
+      - name: Commit formatting if needed
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "chore: auto-format via prettier"
+          default_author: github_actions
 
-    - name: Run Script Dry
-      run: node checkin.js
-      env:
-        NODE_ENV: test
+      - name: Dry-run script execution
+        run: node checkin.js
+        env:
+          NODE_ENV: test
