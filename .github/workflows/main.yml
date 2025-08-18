@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Create dummy .env
+      run: |
+        echo "ENGELSYSTEM_USER=demo" >> .env
+        echo "ENGELSYSTEM_PASS=demo" >> .env
+        echo "ENGELSYSTEM_APIKEY=demo" >> .env
+        echo "MATRIX_USER=demo" >> .env
+        echo "MATRIX_PASS=demo" >> .env
+
+    - name: Verify syntax
+      run: node -c checkin.js
+
+    - name: Run dry test
+      run: node checkin.js
+      env:
+        NODE_ENV: test
