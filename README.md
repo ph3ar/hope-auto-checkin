@@ -1,4 +1,10 @@
 # HOPE Auto Check-In (UNLICENSED)
+[![test](https://github.com/ph3ar/hope-auto-checkin/actions/workflows/test.yml/badge.svg)](https://github.com/ph3ar/hope-auto-checkin/actions/workflows/test.yml)
+
+[![CodeQL](https://github.com/ph3ar/hope-auto-checkin/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/ph3ar/hope-auto-checkin/actions/workflows/github-code-scanning/codeql)
+
+
+[![CI](https://github.com/ph3ar/hope-auto-checkin/actions/workflows/main.yml/badge.svg)](https://github.com/ph3ar/hope-auto-checkin/actions/workflows/main.yml)
 
 Smart volunteer shift automation for HOPE conference staff and volunteers.
 
