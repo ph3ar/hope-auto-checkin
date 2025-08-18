@@ -2,11 +2,11 @@ name: test
 
 on:
   push:
-    branches: ["*"]
+    branches: ['*']
   pull_request:
-    branches: ["*"]
+    branches: ['*']
   schedule:
-    - cron: '0 3 * * *'  # nightly UTC
+    - cron: '0 3 * * *'  # nightly
 
 jobs:
   build:
@@ -22,31 +22,30 @@ jobs:
 
       - name: Create dummy .env
         run: |
-          echo "ENGELSYSTEM_USER=demo" >> .env
-          echo "ENGELSYSTEM_PASS=demo" >> .env
-          echo "ENGELSYSTEM_APIKEY=demo" >> .env
-          echo "MATRIX_USER=demo" >> .env
-          echo "MATRIX_PASS=demo" >> .env
+          echo 'ENGELSYSTEM_USER=demo' >> .env
+          echo 'ENGELSYSTEM_PASS=demo' >> .env
+          echo 'ENGELSYSTEM_APIKEY=demo' >> .env
+          echo 'MATRIX_USER=demo' >> .env
+          echo 'MATRIX_PASS=demo' >> .env
 
-      - name: Install prettier and eslint
+      - name: Install Prettier + ESLint
         run: |
           npm init -y
           npm install --save-dev prettier eslint@8
 
-      - name: Run Prettier auto-fix
+      - name: Run Prettier auto-format
         run: npx prettier --write checkin.js
-
-      - name: Run ESLint (single-quote rule)
-        run: |
-          npx eslint@8 checkin.js --no-eslintrc --env node --parser-options=ecmaVersion:2020 --rule 'quotes: [2, "single"]'
 
       - name: Commit formatting if needed
         uses: EndBug/add-and-commit@v9
         with:
-          message: "chore: auto-format via prettier"
           default_author: github_actions
+          message: 'chore: auto-format via prettier'
 
-      - name: Dry-run script execution
+      - name: ESLint (single quotes enforced)
+        run: npx eslint@8 checkin.js --no-eslintrc --env node --parser-options=ecmaVersion:2020 --rule 'quotes: [2, "single"]'
+
+      - name: Dry-run execution
         run: node checkin.js
         env:
           NODE_ENV: test
