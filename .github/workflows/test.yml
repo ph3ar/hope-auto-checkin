@@ -1,4 +1,4 @@
-name: CI
+name: test
 
 on:
   push:
@@ -39,7 +39,7 @@ jobs:
     - name: Run ESLint
       run: |
         npx eslint checkin.js --no-eslintrc --env node --parser-options=ecmaVersion:2020 --rule 'quotes: [2, "single"]'
-
+    npx eslint@8 checkin.js --no-eslintrc --env node --parser-options=ecmaVersion:2020 --rule 'quotes: [2, "single"]'
     - name: Run Prettier Auto-Fix
       run: npx prettier --write checkin.js
 
